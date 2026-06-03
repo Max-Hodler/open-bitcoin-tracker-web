@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  body: string;
+  icon: 'mountain' | 'lock' | 'bolt' | 'code' | 'user-x' | 'eye-off';
+}
+
+const { title, body, icon } = Astro.props;
+---
+
+<div class="feature-card flex flex-col gap-4 rounded-2xl bg-surface p-6">
+  <div class="flex items-center gap-3">
+    <div class="feature-icon-wrap flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+      {icon === 'mountain' && (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+      )}
+      {icon === 'lock' && (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      )}
+      {icon === 'bolt' && (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      )}
+      {icon === 'code' && (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      )}
+      {icon === 'user-x' && (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="8" x2="22" y2="13"/><line x1="22" y1="8" x2="17" y2="13"/></svg>
+      )}
+      {icon === 'eye-off' && (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><line x1="3" y1="3" x2="21" y2="21"/></svg>
+      )}
+    </div>
+    <p class="text-[14px] font-semibold text-ink">{title}</p>
+  </div>
+  <p class="text-sm leading-relaxed text-ink-muted">{body}</p>
+</div>
+
+<style>
+  .feature-card {
+    border: 1px solid var(--color-divider);
+    box-shadow: var(--shadow-card);
+  }
+  /* Icons are always orange and never react to hovering the card. */
+  .feature-icon-wrap {
+    color: var(--color-accent);
+  }
+  .feature-card:hover .feature-icon-wrap {
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+  }
+</style>

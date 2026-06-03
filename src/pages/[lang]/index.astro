@@ -1,0 +1,12 @@
+---
+import HomePage from '../../components/pages/HomePage.astro';
+
+// One static path per non-default locale segment. English lives at the root
+// (src/pages/index.astro), so it is intentionally absent here. Portuguese uses
+// the short segment 'pt' (Astro.currentLocale resolves it to 'pt-BR').
+export function getStaticPaths() {
+  return ['es', 'pt', 'ru', 'tr', 'vi', 'ja', 'fr', 'de', 'it'].map((lang) => ({ params: { lang } }));
+}
+---
+
+<HomePage />

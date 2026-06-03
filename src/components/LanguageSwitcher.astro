@@ -1,0 +1,158 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, resolveLang, stripLocale } from '../i18n/utils';
+
+interface Props {
+  // Which way the menu opens. In the footer there's no room below, so the menu
+  // flips above the trigger.
+  placement?: 'down' | 'up';
+}
+const { placement = 'down' } = Astro.props;
+
+const t = useTranslations(Astro.currentLocale);
+const current = resolveLang(Astro.currentLocale);
+
+// The locale-agnostic remainder of the current path, so each option links to
+// the SAME page in its language (e.g. /es/about -> /de/about, /about).
+const localePath = stripLocale(Astro.url.pathname);
+
+// `code` matches the keys of `ui` (and Astro.currentLocale); `loc` is the URL
+// path segment Astro routes on (pt for Portuguese); `label` is the autonym.
+// Sorted A–Z by autonym, matching the app's language list.
+const LANGS = [
+  { code: 'de', loc: 'de', label: 'Deutsch' },
+  { code: 'en', loc: 'en', label: 'English' },
+  { code: 'es', loc: 'es', label: 'Español' },
+  { code: 'fr', loc: 'fr', label: 'Français' },
+  { code: 'it', loc: 'it', label: 'Italiano' },
+  { code: 'pt-BR', loc: 'pt', label: 'Português (BR)' },
+  { code: 'vi', loc: 'vi', label: 'Tiếng Việt' },
+  { code: 'tr', loc: 'tr', label: 'Türkçe' },
+  { code: 'ru', loc: 'ru', label: 'Русский' },
+  { code: 'ja', loc: 'ja', label: '日本語' },
+] as const;
+
+const currentLabel = LANGS.find((l) => l.code === current)?.label ?? 'English';
+---
+
+<details class:list={['lang-switcher', `lang-switcher--${placement}`]}>
+  <summary aria-label={t.nav.langLabel} class="lang-summary">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+    <span class="lang-current">{currentLabel}</span>
+    <svg class="lang-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  </summary>
+  <ul class="lang-menu" role="list">
+    {LANGS.map((l) => (
+      <li>
+        <a
+          href={getRelativeLocaleUrl(l.loc, localePath)}
+          hreflang={l.code}
+          lang={l.code}
+          class:list={['lang-option', { 'is-current': l.code === current }]}
+          aria-current={l.code === current ? 'true' : undefined}
+        >
+          {l.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</details>
+
+<script>
+  // Close the dropdown on outside-click or Escape. The control still works with
+  // JS disabled (native <details> toggle); this only adds dismissal niceties.
+  document.querySelectorAll<HTMLDetailsElement>('.lang-switcher').forEach((el) => {
+    document.addEventListener('click', (e) => {
+      if (el.open && !el.contains(e.target as Node)) el.open = false;
+    });
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') el.open = false;
+    });
+  });
+</script>
+
+<style>
+  .lang-switcher {
+    position: relative;
+  }
+  .lang-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    list-style: none;
+    color: var(--color-ink-muted);
+    font-size: 14px;
+    transition: color 0.2s ease;
+    user-select: none;
+  }
+  .lang-summary::-webkit-details-marker {
+    display: none;
+  }
+  .lang-summary:hover {
+    color: var(--color-ink);
+  }
+  .lang-current {
+    display: inline;
+  }
+  .lang-caret {
+    transition: transform 0.2s ease;
+    opacity: 0.7;
+  }
+  /* The caret points toward where the menu will open: down-placement starts
+     pointing down and flips up when open; up-placement does the reverse. */
+  .lang-switcher--up .lang-caret {
+    transform: rotate(180deg);
+  }
+  .lang-switcher--down[open] .lang-caret {
+    transform: rotate(180deg);
+  }
+  .lang-switcher--up[open] .lang-caret {
+    transform: rotate(0deg);
+  }
+
+  .lang-menu {
+    position: absolute;
+    left: 0;
+    z-index: 60;
+    margin: 0;
+    padding: 0.375rem;
+    list-style: none;
+    min-width: 11rem;
+    max-height: min(70vh, 24rem);
+    overflow-y: auto;
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .lang-switcher--down .lang-menu {
+    top: calc(100% + 0.5rem);
+  }
+  .lang-switcher--up .lang-menu {
+    bottom: calc(100% + 0.5rem);
+  }
+  .lang-option {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    color: var(--color-ink-muted);
+    font-size: 14px;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .lang-option:hover {
+    background: var(--hover-tint);
+    color: var(--color-ink);
+  }
+  .lang-option.is-current {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+</style>

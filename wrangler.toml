@@ -1,0 +1,12 @@
+# Cloudflare Pages configuration.
+#
+# This project is a static Astro build (the `dist/` directory) plus a Pages
+# Function in `functions/` (Accept-Language auto-redirect). The only reason this
+# file exists is to pin `compatibility_date`: without it, Cloudflare resolves the
+# runtime behavior date independently for local `wrangler pages dev` and for the
+# production build, so the two can drift apart over time. Pinning keeps local and
+# production on identical, deterministic runtime behavior. Bump the date (and
+# re-test) to opt into newer Workers runtime behavior.
+name = "open-bitcoin-tracker-web"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-06-02"

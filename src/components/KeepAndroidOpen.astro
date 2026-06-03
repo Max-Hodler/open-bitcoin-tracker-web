@@ -1,0 +1,72 @@
+---
+import { useTranslations, kaoLang } from '../i18n/utils';
+
+const t = useTranslations(Astro.currentLocale);
+const bannerLang = kaoLang(Astro.currentLocale);
+const bannerSrc = `https://keepandroidopen.org/banner.js?lang=${bannerLang}&size=mini&hidebutton=off&id=kao-banner`;
+---
+
+<section class="kao-section">
+  <div class="site-container py-12 md:py-14">
+    <div class="flex justify-center" data-reveal>
+      <div id="kao-banner"></div>
+      <script is:inline src={bannerSrc}></script>
+    </div>
+
+    <div class="mt-8 text-center" data-reveal>
+      <p class="kao-body text-sm leading-relaxed">
+        {t.kao.body}
+      </p>
+      <p class="mt-4">
+        <a
+          href="https://keepandroidopen.org/"
+          rel="noopener"
+          class="kao-link inline-flex items-center gap-1.5 text-sm font-semibold"
+        >
+          {t.kao.linkText}
+          <svg
+            class="h-3.5 w-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M7 17 17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kao-section {
+    background: rgb(215 38 56 / 0.06);
+  }
+  /* In dark mode the 6%-alpha red all but disappears on the navy, reading as
+     near-white. Use a stronger red-tinted panel so it still clearly signals a
+     warning against the deepsea background. */
+  :global(html.dark) .kao-section {
+    background: rgb(215 38 56 / 0.16);
+  }
+  .kao-body {
+    color: var(--color-ink-muted);
+  }
+  .kao-link {
+    color: rgb(215 38 56);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s ease;
+  }
+  /* Brighter red on the dark panel for legible contrast. */
+  :global(html.dark) .kao-link {
+    color: rgb(255 122 112);
+  }
+  .kao-link:hover {
+    opacity: 0.75;
+  }
+</style>

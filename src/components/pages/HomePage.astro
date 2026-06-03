@@ -1,0 +1,21 @@
+---
+// Shared home-page body, rendered both at the English root (src/pages/index.astro)
+// and under every locale prefix (src/pages/[lang]/index.astro). All copy comes
+// from the child components via Astro.currentLocale, so no props are needed.
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../Hero.astro';
+import Privacy from '../Privacy.astro';
+import Themes from '../Themes.astro';
+import KeepAndroidOpen from '../KeepAndroidOpen.astro';
+import Footer from '../Footer.astro';
+---
+
+<Layout page="home">
+  <main>
+    <Hero />
+    <Themes />
+    <Privacy />
+    <KeepAndroidOpen />
+  </main>
+  <Footer />
+</Layout>

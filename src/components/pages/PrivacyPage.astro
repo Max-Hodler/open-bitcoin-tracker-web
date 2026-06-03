@@ -1,0 +1,106 @@
+---
+// Shared Privacy-policy body (English root + every locale prefix). The nine
+// sections render from the active locale's structured `policy.sections`; the
+// repository links in sections 6 and 9 are added here so URLs never live in
+// translation strings.
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const repoUrl = 'https://github.com/Max-Hodler/open-bitcoin-tracker';
+
+const t = useTranslations(Astro.currentLocale);
+const p = t.policy;
+---
+
+<Layout page="privacy">
+  <Nav />
+  <main>
+    <section>
+      <div class="mx-auto max-w-2xl px-6 sm:px-12 lg:px-20 pt-10 pb-10 md:pt-14 md:pb-12">
+        <h1 class="text-3xl font-semibold tracking-tight text-ink md:text-4xl">
+          {p.h1}
+        </h1>
+        <p class="mt-3 text-sm text-ink-muted">{p.lastUpdated}</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="mx-auto max-w-2xl px-6 sm:px-12 lg:px-20 pb-24 md:pb-32 prose-policy">
+
+        <p>{p.intro}</p>
+
+        {p.sections.map((section) => (
+          <>
+            <h2>{section.heading}</h2>
+            {('paras' in section ? section.paras : []).map((para) => <p>{para}</p>)}
+            {'list' in section && section.list && (
+              <ul>
+                {section.list.map((item) => <li>{item}</li>)}
+              </ul>
+            )}
+            {('parasAfter' in section ? section.parasAfter : []).map((para) => <p>{para}</p>)}
+            {'repoLabel' in section && section.repoLabel && (
+              <p>
+                {section.repoLabel} <a href={repoUrl} rel="noopener">github.com/Max-Hodler/open-bitcoin-tracker</a>
+              </p>
+            )}
+            {'contactBefore' in section && section.contactBefore && (
+              <p>
+                {section.contactBefore} <a href={`${repoUrl}/issues`} rel="noopener">github.com/Max-Hodler/open-bitcoin-tracker/issues</a>{section.contactAfter}
+              </p>
+            )}
+          </>
+        ))}
+
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .prose-policy {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+  .prose-policy :global(h2) {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.005em;
+  }
+  .prose-policy :global(h2:first-of-type) { margin-top: 1.5rem; }
+  .prose-policy :global(p) {
+    color: var(--color-ink-muted);
+    margin: 0 0 0.875rem;
+  }
+  .prose-policy :global(ul) {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin: 0 0 0.875rem;
+  }
+  .prose-policy :global(ul li) {
+    color: var(--color-ink-muted);
+    margin-bottom: 0.35rem;
+    padding-left: 0.25rem;
+  }
+  .prose-policy :global(ul li::marker) {
+    color: rgb(var(--color-ink-rgb) / 0.4);
+  }
+  .prose-policy :global(strong) { color: var(--color-ink); font-weight: 600; }
+  .prose-policy :global(a) {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgb(var(--color-ink-rgb) / 0.3);
+  }
+  .prose-policy :global(a:hover) {
+    text-decoration-color: var(--color-ink);
+  }
+</style>

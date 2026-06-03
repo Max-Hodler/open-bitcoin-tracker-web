@@ -1,0 +1,99 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  class?: string;
+  showLabel?: boolean;
+}
+const { class: className = '', showLabel = false } = Astro.props;
+
+const t = useTranslations(Astro.currentLocale);
+---
+
+<button
+  type="button"
+  class:list={[
+    'theme-toggle inline-flex items-center justify-center gap-2 hover:text-ink transition-colors duration-200',
+    showLabel && 'theme-toggle--labeled',
+    className,
+  ]}
+  aria-label={t.nav.themeToggleAria}
+  aria-pressed="false"
+>
+  <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  {showLabel && (
+    <>
+      <span class="label-dark text-sm">{t.nav.themeDark}</span>
+      <span class="label-light text-sm">{t.nav.themeLight}</span>
+    </>
+  )}
+</button>
+
+<script>
+  // Theme toggle. The initial theme is already applied (no-FOUC script in
+  // Layout.astro); here we just flip + persist on click. `.theme-transition`
+  // is added before flipping so only user toggles animate, not page loads.
+  // There can be more than one toggle on a page (nav + footer): a single click
+  // flips the root and we re-sync every button's aria-pressed state.
+  const root = document.documentElement;
+  const toggles = document.querySelectorAll<HTMLButtonElement>('.theme-toggle');
+
+  const sync = () => {
+    const dark = root.classList.contains('dark');
+    toggles.forEach((b) => b.setAttribute('aria-pressed', String(dark)));
+  };
+  sync();
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      root.classList.add('theme-transition');
+      const dark = root.classList.toggle('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      sync();
+      // Keep the browser-chrome color in sync. Replace the media-scoped pair
+      // with a single definitive tag once a choice has been made.
+      let meta = document.querySelector('meta[name="theme-color"]:not([media])');
+      if (!meta) {
+        document
+          .querySelectorAll('meta[name="theme-color"][media]')
+          .forEach((m) => m.remove());
+        meta = document.createElement('meta');
+        meta.setAttribute('name', 'theme-color');
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', dark ? '#0F1E3A' : '#F8F7F3');
+      // Let other components (e.g. the hero phone) react to a runtime theme
+      // switch. The pre-paint init in Layout.astro covers the initial load;
+      // this covers toggles made while the page is open.
+      document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
+    });
+  });
+</script>
+
+<style>
+  /* Sun/moon swap. Scoped styles can't see the html class on their own, so the
+     dark-state rules reach out via :global(html.dark). */
+  .theme-toggle .icon-sun {
+    display: none;
+  }
+  :global(html.dark) .theme-toggle .icon-moon {
+    display: none;
+  }
+  :global(html.dark) .theme-toggle .icon-sun {
+    display: inline-flex;
+  }
+
+  /* Text labels name the *target* theme, so they pair with the icon that shows
+     in the current mode: light mode → moon + "Dark mode"; dark mode → sun +
+     "Light mode". Same :global(html.dark) reach-out as the icon swap above. */
+  .theme-toggle .label-light {
+    display: none;
+  }
+  :global(html.dark) .theme-toggle .label-dark {
+    display: none;
+  }
+  :global(html.dark) .theme-toggle .label-light {
+    display: inline;
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+import FeatureCard from './FeatureCard.astro';
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations(Astro.currentLocale);
+
+const icons = ['user-x', 'eye-off', 'lock', 'code'] as const;
+const cards = t.privacy.cards.map((c, i) => ({ ...c, icon: icons[i] }));
+---
+
+<section id="privacy" class="privacy-section relative">
+  <div class="site-container py-20 md:py-32">
+
+    <div class="text-center" data-reveal-stagger="80">
+      <h2 class="font-display text-3xl font-bold italic tracking-tight text-accent md:text-4xl" data-reveal>{t.privacy.heading}</h2>
+      <p class="mt-2 text-sm leading-relaxed text-ink-muted" data-reveal>{t.privacy.sub}</p>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 md:mt-10 md:gap-6" data-reveal-stagger="90">
+      {cards.map((c) => (
+        <div data-reveal>
+          <FeatureCard title={c.title} body={c.body} icon={c.icon} />
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .privacy-section {
+    background: var(--color-paper);
+  }
+</style>

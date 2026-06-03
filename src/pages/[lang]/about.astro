@@ -1,0 +1,9 @@
+---
+import AboutPage from '../../components/pages/AboutPage.astro';
+
+export function getStaticPaths() {
+  return ['es', 'pt', 'ru', 'tr', 'vi', 'ja', 'fr', 'de', 'it'].map((lang) => ({ params: { lang } }));
+}
+---
+
+<AboutPage />

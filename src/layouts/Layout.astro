@@ -1,0 +1,184 @@
+---
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import '../styles/global.css';
+import { useTranslations, htmlLang, stripLocale } from '../i18n/utils';
+
+interface Props {
+  // Which page's metadata to use for <title>/description. Pages pass this;
+  // explicit title/description props still override if ever needed.
+  page?: 'home' | 'about' | 'privacy';
+  title?: string;
+  description?: string;
+}
+
+const { page = 'home', title: titleProp, description: descriptionProp } = Astro.props;
+
+const t = useTranslations(Astro.currentLocale);
+const lang = htmlLang(Astro.currentLocale);
+
+const title = titleProp ?? t.meta[page].title;
+const description = descriptionProp ?? t.meta[page].description;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL('/og-image.png', Astro.site).toString();
+const ogImageAlt = t.meta.ogImageAlt;
+const siteName = 'Open Bitcoin Tracker';
+const homeUrl = new URL('/', Astro.site).toString();
+
+// The locale-agnostic remainder of the current path ('' | 'about' | 'privacy'),
+// used to build this same page's URL in every language for hreflang.
+const localePath = stripLocale(Astro.url.pathname);
+
+// hreflang advertises every translation of the current page. The `loc` is the
+// URL path segment Astro routes on (pt), while `code` is the BCP-47 value
+// search engines expect (pt-BR). x-default points at the un-prefixed English.
+const alternates = [
+  { code: 'en', loc: 'en' },
+  { code: 'es', loc: 'es' },
+  { code: 'pt-BR', loc: 'pt' },
+  { code: 'ru', loc: 'ru' },
+  { code: 'tr', loc: 'tr' },
+  { code: 'vi', loc: 'vi' },
+  { code: 'ja', loc: 'ja' },
+  { code: 'fr', loc: 'fr' },
+  { code: 'de', loc: 'de' },
+  { code: 'it', loc: 'it' },
+];
+
+// The SoftwareApplication entity describes the app itself. It appears once per
+// locale home (not on about/privacy) and always points at the canonical app
+// URL/download, not the current localized page. softwareVersion is
+// intentionally omitted so it can't silently go stale against the release.
+const isHome = localePath === '';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: siteName,
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Android 5.0+',
+  url: homeUrl,
+  author: {
+    '@type': 'Person',
+    name: 'Max Hodler',
+  },
+  downloadUrl: 'https://github.com/Max-Hodler/open-bitcoin-tracker/releases/latest',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  license: 'https://opensource.org/licenses/MIT',
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Theme init must run before first paint to avoid a flash of the wrong
+         theme. is:inline keeps Astro from bundling/deferring it. Follows the
+         saved choice if present, otherwise the OS preference. -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var dark = stored
+            ? stored === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (dark) document.documentElement.classList.add('dark');
+          // When an explicit choice overrides the OS default, collapse the
+          // media-scoped theme-color tags into one definitive value.
+          if (stored) {
+            document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+              m.remove();
+            });
+            var meta = document.createElement('meta');
+            meta.name = 'theme-color';
+            meta.content = dark ? '#0F1E3A' : '#F8F7F3';
+            document.head.appendChild(meta);
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.code} href={getAbsoluteLocaleUrl(a.loc, localePath)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl('en', localePath)} />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#F8F7F3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F1E3A" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <!-- Fonts are self-hosted (see @font-face in global.css); preload the
+         variable Inter file since it's used for all body text on first paint. -->
+    <link rel="preload" href="/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
+
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body class="bg-paper text-ink antialiased">
+    <slot />
+
+    <script>
+      // Scroll-reveal: any [data-reveal] element fades/slides in once it
+      // enters the viewport. Children can opt into a stagger via
+      // [data-reveal-stagger] on a parent (delays each direct [data-reveal]).
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const reveal = (el: Element) => el.classList.add('is-revealed');
+
+      if (reduceMotion) {
+        // Show everything immediately, no animation.
+        document.querySelectorAll('[data-reveal]').forEach(reveal);
+      } else {
+        // Apply stagger delays to grouped children.
+        document.querySelectorAll('[data-reveal-stagger]').forEach((group) => {
+          const step = Number((group as HTMLElement).dataset.revealStagger) || 90;
+          group.querySelectorAll(':scope > [data-reveal]').forEach((child, i) => {
+            (child as HTMLElement).style.transitionDelay = `${i * step}ms`;
+          });
+        });
+
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                reveal(entry.target);
+                obs.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+        );
+
+        document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>

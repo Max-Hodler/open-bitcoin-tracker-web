@@ -1,0 +1,186 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations(Astro.currentLocale);
+
+const srcs = [
+  '/screenshots/paper-cream.png',
+  '/screenshots/deepsea-blue.png',
+  '/screenshots/salmon-press.png',
+  '/screenshots/oled-black.png',
+];
+const shots = srcs.map((src, i) => ({ src, label: t.themes.labels[i] }));
+---
+
+<section id="themes" class="section-surface relative">
+  <div class="site-container pt-16 pb-28 md:pt-24 md:pb-40">
+    <div class="flex flex-col items-center gap-12 md:gap-16">
+
+      <div class="text-center" data-reveal-stagger="80">
+        <h2 class="font-display text-3xl font-bold italic tracking-tight text-accent md:text-4xl" data-reveal>{t.themes.heading}</h2>
+        <p class="mt-2 text-sm leading-relaxed text-ink-muted" data-reveal>{t.themes.sub}</p>
+      </div>
+
+      <div class="deck-bleed" data-reveal="scale">
+        <div class="themes-deck" id="themes-deck" role="region" aria-label={t.themes.regionAria}>
+          {shots.map((s, i) => (
+            <figure class="deck-card" data-index={i} role="button" aria-label={t.themes.showAria.replace('{label}', s.label)} tabindex="0">
+              <div class="deck-frame">
+                <div class="deck-screen-wrap">
+                  <img src={s.src} alt={`${t.themes.altPrefix}${s.label}${t.themes.altSuffix}`} loading="lazy" width="1080" height="2340" />
+                </div>
+              </div>
+            </figure>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  const deck = document.getElementById('themes-deck');
+  if (deck) {
+    const cards = Array.from(deck.querySelectorAll('.deck-card')) as HTMLElement[];
+    const total = cards.length;
+    let active = 0;
+
+    const update = () => {
+      cards.forEach((card, i) => {
+        const pos = (i - active + total) % total;
+        card.setAttribute('data-pos', String(pos));
+        card.setAttribute('aria-hidden', pos === 0 ? 'false' : 'true');
+      });
+    };
+
+    cards.forEach((card) => {
+      const activate = () => {
+        const idx = parseInt(card.dataset.index || '0', 10);
+        if (idx === active) {
+          active = (active + 1) % total;
+        } else {
+          active = idx;
+        }
+        update();
+      };
+      card.addEventListener('click', activate);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate();
+        }
+      });
+    });
+
+    update();
+  }
+</script>
+
+<style>
+  .section-surface {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-divider);
+    border-bottom: 1px solid var(--color-divider);
+  }
+  /* Break out of .site-container's side padding so the fanned cards can
+     run edge to edge. overflow-x: clip on <html> still prevents the page
+     from scrolling sideways. */
+  .deck-bleed {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+  .themes-deck {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px;
+    overflow-x: clip;
+  }
+  @media (max-width: 640px) {
+    .themes-deck { height: 400px; }
+  }
+  .deck-card {
+    position: absolute;
+    width: 190px;
+    margin: 0;
+    cursor: pointer;
+    transform-origin: 50% 130%;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.45s ease,
+                opacity 0.45s ease;
+    will-change: transform;
+  }
+  @media (min-width: 768px) {
+    .deck-card { width: 200px; }
+  }
+  @media (min-width: 1024px) {
+    .deck-card { width: 220px; }
+  }
+  .deck-card:focus { outline: none; }
+  .deck-card:focus-visible .deck-frame {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .deck-frame {
+    position: relative;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 34px;
+    padding: 5px;
+    /* Match the hero phone's metal rail look (lit from top-left). */
+    background:
+      linear-gradient(145deg, #3a3a3d 0%, #0c0c0d 22%, #060607 50%, #0c0c0d 78%, #2c2c2f 100%);
+    box-shadow:
+      0 0 0 1px rgb(0 0 0 / 0.55),
+      inset 0 1px 1px rgb(255 255 255 / 0.22),
+      inset 0 -1px 1px rgb(0 0 0 / 0.6),
+      0 2px 4px rgb(31 27 20 / 0.10),
+      0 12px 28px rgb(31 27 20 / 0.16),
+      0 24px 56px rgb(31 27 20 / 0.10);
+  }
+  /* Border (not padding) so overflow:hidden clips the screen at the content
+     edge, concentric with the bezel (29px − 2px = 27px) — no corner gap. */
+  .deck-screen-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 29px;
+    background: #050505;
+    border: 2px solid #050505;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.04),
+      inset 0 1px 2px rgb(0 0 0 / 0.8);
+    overflow: hidden;
+  }
+  .deck-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    background: #050505;
+  }
+  .deck-card[data-pos="0"] {
+    transform: rotate(-21deg);
+    z-index: 40;
+  }
+  .deck-card[data-pos="1"] {
+    transform: rotate(-7deg);
+    z-index: 30;
+    filter: brightness(0.95);
+  }
+  .deck-card[data-pos="2"] {
+    transform: rotate(7deg);
+    z-index: 20;
+    filter: brightness(0.90);
+  }
+  .deck-card[data-pos="3"] {
+    transform: rotate(21deg);
+    z-index: 10;
+    filter: brightness(0.85);
+  }
+</style>

@@ -1,0 +1,120 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, resolveLang } from '../i18n/utils';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const repoUrl = 'https://github.com/Max-Hodler/open-bitcoin-tracker';
+const releasesUrl = 'https://github.com/Max-Hodler/open-bitcoin-tracker/releases/latest';
+
+const t = useTranslations(Astro.currentLocale);
+const lang = resolveLang(Astro.currentLocale);
+const homeHref = getRelativeLocaleUrl(lang, '');
+const aboutHref = getRelativeLocaleUrl(lang, 'about');
+const privacyHref = getRelativeLocaleUrl(lang, 'privacy');
+---
+
+<footer class="footer-section">
+  <div class="site-container pt-14 pb-24 md:pt-16 md:pb-32">
+    <div class="flex flex-col gap-12 md:flex-row md:items-end md:justify-between md:gap-10">
+    <div class="footer-brand" data-reveal>
+      <div class="flex items-center gap-3">
+        <img src="/app-icon.png" width="48" height="48" alt="" class="footer-app-icon h-11 w-11 shrink-0" />
+        <span class="text-lg font-bold tracking-tight text-ink">Open Bitcoin Tracker</span>
+      </div>
+      <p class="mt-3 text-sm leading-relaxed text-ink-muted">{t.hero.tagline}</p>
+      <div class="mt-5 flex flex-wrap items-center gap-3">
+        <a href={releasesUrl} rel="noopener" class="cta-primary inline-flex items-center gap-2.5 rounded-xl px-5 py-2.5 text-sm font-semibold text-white">
+          <svg width="15" height="17" viewBox="0 0 24 26" fill="currentColor" aria-hidden="true" style="flex-shrink:0; transform: translateY(-1px);">
+            <path d="M7.4 3.2 9.1 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <path d="M16.6 3.2 14.9 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <path d="M4.5 11.2a7.5 7 0 0 1 15 0Z"/>
+            <circle cx="9.2" cy="8.4" r="0.95" fill="var(--color-accent)"/>
+            <circle cx="14.8" cy="8.4" r="0.95" fill="var(--color-accent)"/>
+            <rect x="5" y="12" width="14" height="10.2" rx="1.2"/>
+            <rect x="1.8" y="12" width="2.4" height="8" rx="1.2"/>
+            <rect x="19.8" y="12" width="2.4" height="8" rx="1.2"/>
+            <rect x="7.8" y="22.2" width="2.4" height="4" rx="1.2"/>
+            <rect x="13.8" y="22.2" width="2.4" height="4" rx="1.2"/>
+          </svg>
+          {t.hero.downloadApk}
+        </a>
+        <a href={repoUrl} rel="noopener" class="cta-secondary inline-flex items-center gap-2.5 rounded-xl px-5 py-2.5 text-sm font-semibold text-ink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.11.82-.26.82-.577v-2.234c-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.332-1.756-1.332-1.756-1.09-.745.083-.729.083-.729 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.332-5.467-5.93 0-1.31.468-2.382 1.236-3.222-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23A11.5 11.5 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.235 1.912 1.235 3.222 0 4.61-2.807 5.625-5.48 5.92.43.372.814 1.102.814 2.222v3.293c0 .32.218.694.825.576C20.565 21.795 24 17.298 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          {t.hero.viewGithub}
+        </a>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-start gap-10 sm:flex-row sm:items-start sm:gap-16 text-sm text-ink-muted" data-reveal-stagger="100">
+
+      <div data-reveal>
+        <ul class="space-y-2.5">
+          <li><a href={aboutHref} class="footer-link hover:text-ink">{t.footer.about}</a></li>
+          <li><a href={privacyHref} class="footer-link hover:text-ink">{t.footer.privacy}</a></li>
+        </ul>
+      </div>
+
+      <div class="max-w-[260px]" data-reveal>
+        <div class="flex flex-col items-start gap-2.5 text-ink-muted">
+          <LanguageSwitcher placement="up" />
+          <ThemeToggle showLabel />
+        </div>
+        <p class="mt-4 leading-relaxed text-ink-muted">{t.footer.copyright}</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-section {
+    border-top: 1px solid var(--color-divider);
+    background: var(--color-surface);
+  }
+  .footer-link {
+    transition: color 0.15s ease;
+  }
+  .footer-app-icon {
+    filter: drop-shadow(0 1px 2px rgb(var(--color-ink-rgb) / 0.04)) drop-shadow(0 4px 12px rgb(var(--color-ink-rgb) / 0.05));
+  }
+  .footer-brand .cta-primary {
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: 0 1px 3px rgb(247 147 26 / 0.30), 0 4px 16px rgb(247 147 26 / 0.22);
+    transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  }
+  .footer-brand .cta-primary:hover {
+    opacity: 0.92;
+    box-shadow: 0 2px 6px rgb(247 147 26 / 0.35), 0 8px 24px rgb(247 147 26 / 0.28);
+    transform: translateY(-1px);
+  }
+  .footer-brand .cta-primary:active { transform: translateY(0); }
+  .footer-brand .cta-secondary {
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+  .footer-brand .cta-secondary:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+  }
+  .footer-brand .cta-secondary:active { transform: translateY(0); }
+  /* The leading globe/sun icons carry a little whitespace inside their SVG box,
+     so their visible shape looks slightly inset from the column's left edge.
+     A 1px nudge lines the icons up with the copyright text below them. */
+  .footer-section :global(.theme-toggle > svg:first-child) {
+    margin-left: -1px;
+  }
+  /* The sun/moon glyphs fill their 24×24 box more than the globe circle
+     (r="10" leaves a 2-unit inset all round), so the globe reads as nudged
+     right of the icons below it. Pull the globe a touch further left so its
+     visible circle lines up with the sun's rays / moon's crescent, without
+     touching the text gap (kept equal to the theme toggle's). */
+  .footer-section :global(.lang-summary > svg:first-child) {
+    margin-left: -2px;
+  }
+</style>
+</content>
+</invoke>

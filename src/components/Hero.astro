@@ -1,0 +1,458 @@
+---
+import FeatureCard from './FeatureCard.astro';
+import { useTranslations } from '../i18n/utils';
+
+const repoUrl = 'https://github.com/Max-Hodler/open-bitcoin-tracker';
+const releasesUrl = 'https://github.com/Max-Hodler/open-bitcoin-tracker/releases/latest';
+
+const t = useTranslations(Astro.currentLocale);
+
+// Icons stay fixed per reason; only the copy is translated. Zip by index.
+const icons = ['mountain', 'lock', 'bolt'] as const;
+const reasons = t.hero.reasons.map((r, i) => ({ ...r, icon: icons[i] }));
+
+// The four screenshots cycled by the inline script below. The labels/alt text
+// are translated, so they're handed to the client via define:vars.
+const screenSrcs = [
+  '/screenshots/paper-cream.png',
+  '/screenshots/deepsea-blue.png',
+  '/screenshots/salmon-press.png',
+  '/screenshots/oled-black.png',
+];
+const themeLabels = t.themes.labels;
+const altPrefix = t.hero.altPrefix;
+const altSuffix = t.hero.altSuffix;
+// In dark mode the hero opens on the Deepsea Blue theme (index 1) rather than
+// the light default (index 0). The actual src is corrected client-side before
+// paint by the inline script below — this server value just covers the
+// no-JS / SSR case for the light default.
+const firstAlt = `${altPrefix}${themeLabels[0]}${altSuffix}`;
+---
+
+<section class="hero-section relative overflow-hidden" id="hero">
+  <div class="grain-overlay pointer-events-none absolute inset-0 z-10" aria-hidden="true"></div>
+
+  <div class="pointer-events-none absolute bottom-0 left-0 right-0 z-0 flex items-end" aria-hidden="true">
+    <svg viewBox="0 0 400 80" class="w-full opacity-[0.06]" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,70 C20,68 35,72 55,60 C75,48 85,30 105,28 C125,26 135,40 155,38 C175,36 185,20 205,18 C225,16 235,32 255,30 C275,28 285,15 305,12 C325,9 335,22 355,20 C375,18 385,8 400,6" fill="none" stroke="#F7931A" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+      <path d="M0,70 C20,68 35,72 55,60 C75,48 85,30 105,28 C125,26 135,40 155,38 C175,36 185,20 205,18 C225,16 235,32 255,30 C275,28 285,15 305,12 C325,9 335,22 355,20 C375,18 385,8 400,6 L400,80 L0,80 Z" fill="#F7931A" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <div class="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2" aria-hidden="true" style="width: 600px; height: 400px; background: radial-gradient(ellipse at center, var(--hero-glow) 0%, transparent 70%); filter: blur(1px);"></div>
+
+  <div class="site-container relative z-20 pt-20 pb-28 md:pt-32 md:pb-40 hero-inner">
+    <div class="grid grid-cols-1 items-center lg:items-start gap-12 lg:grid-cols-12 lg:gap-10 xl:gap-16">
+
+      <!-- LEFT: text -->
+      <div class="lg:col-span-7 text-center lg:text-left lg:pt-2">
+        <div class="flex items-center justify-center lg:justify-start gap-4 lg:gap-5">
+          <img src="/app-icon.png" width="96" height="96" alt="" class="hero-app-icon h-16 w-16 lg:h-24 lg:w-24 shrink-0" />
+          <h1 class="text-[1.6rem] leading-[1.05] font-bold tracking-tight text-ink sm:whitespace-nowrap sm:text-[2.2rem] md:text-[2.6rem] lg:text-[clamp(1.9rem,3.4vw,3rem)]">Open Bitcoin Tracker</h1>
+        </div>
+
+        <p class="mt-4 text-sm leading-relaxed text-ink-muted">{t.hero.tagline}</p>
+
+        <div class="mt-9 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+          <a href={releasesUrl} rel="noopener" class="cta-primary inline-flex items-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-white">
+            <svg width="15" height="17" viewBox="0 0 24 26" fill="currentColor" aria-hidden="true" style="flex-shrink:0; transform: translateY(-1px);">
+              <path d="M7.4 3.2 9.1 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+              <path d="M16.6 3.2 14.9 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+              <path d="M4.5 11.2a7.5 7 0 0 1 15 0Z"/>
+              <circle cx="9.2" cy="8.4" r="0.95" fill="var(--color-accent)"/>
+              <circle cx="14.8" cy="8.4" r="0.95" fill="var(--color-accent)"/>
+              <rect x="5" y="12" width="14" height="10.2" rx="1.2"/>
+              <rect x="1.8" y="12" width="2.4" height="8" rx="1.2"/>
+              <rect x="19.8" y="12" width="2.4" height="8" rx="1.2"/>
+              <rect x="7.8" y="22.2" width="2.4" height="4" rx="1.2"/>
+              <rect x="13.8" y="22.2" width="2.4" height="4" rx="1.2"/>
+            </svg>
+            {t.hero.downloadApk}
+          </a>
+          <a href={repoUrl} rel="noopener" class="cta-secondary inline-flex items-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-ink">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.11.82-.26.82-.577v-2.234c-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.332-1.756-1.332-1.756-1.09-.745.083-.729.083-.729 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.332-5.467-5.93 0-1.31.468-2.382 1.236-3.222-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23A11.5 11.5 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.235 1.912 1.235 3.222 0 4.61-2.807 5.625-5.48 5.92.43.372.814 1.102.814 2.222v3.293c0 .32.218.694.825.576C20.565 21.795 24 17.298 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            {t.hero.viewGithub}
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: phone -->
+      <div class="lg:col-span-5 lg:row-span-2 flex justify-center lg:items-center lg:self-center">
+        <div class="hero-phone" id="hero-phone" role="button" tabindex="0" aria-label={t.hero.phoneAria}>
+          <div class="hero-phone-tilt">
+            <div class="hero-phone-shadow" aria-hidden="true"></div>
+            <div class="hero-phone-frame">
+              <div class="hero-phone-edge" aria-hidden="true"></div>
+              <div class="hero-phone-screen-wrap">
+                <img id="hero-phone-screen" src="/screenshots/paper-cream.png" alt={firstAlt} width="1080" height="2340" class="hero-phone-screen" />
+                <img id="hero-phone-screen-next" src="/screenshots/paper-cream.png" alt="" aria-hidden="true" width="1080" height="2340" class="hero-phone-screen hero-phone-screen-next" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEFT (row 2): why cards -->
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-1 gap-3" data-reveal-stagger="90">
+          {reasons.map((r) => (
+            <div data-reveal>
+              <FeatureCard title={r.title} body={r.body} icon={r.icon} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    background: var(--color-paper);
+    min-height: 88svh;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .hero-section > .hero-inner { width: 100%; }
+
+  .hero-app-icon {
+    filter: drop-shadow(0 1px 2px rgb(var(--color-ink-rgb) / 0.04)) drop-shadow(0 4px 12px rgb(var(--color-ink-rgb) / 0.05));
+  }
+
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.6;
+  }
+
+  .hero-phone {
+    width: 260px;
+    max-width: min(100%, calc((100svh - 8rem) * 9 / 19.5));
+    /* Corner radii are derived from the rendered width so the rounded screen
+       always clips a touch *inside* the screenshot's own baked-in corner
+       curve — keeping the screenshot's black corners hidden at every size.
+       At the 260px base this resolves to ~44px / ~37px, the values these
+       were originally hand-tuned to. */
+    container-type: inline-size;
+    --frame-radius: 16.9cqw;
+    /* The bezel (7px frame padding + 3px screen border = 10px) must read as a
+       uniform band, including around the corners. Concentric rounded corners
+       are uniform only when the inner radius = outer radius − band width.
+       The screenshot is clipped at the screen-wrap's *padding* edge
+       (border-radius − 3px border), so set this to frame − 7px; the clip then
+       lands at frame − 10px, concentric with the full 10px bezel. Derive it
+       from the frame radius rather than setting it independently — otherwise
+       the corners thin out as the phone scales. */
+    --screen-radius: calc(var(--frame-radius) - 7px);
+    /* Establish the 3D space the device tilts within. A nearer vanishing
+       point (smaller perspective) exaggerates foreshortening, so the same
+       tilt reads as a solid object turning rather than a flat plane. */
+    perspective: 800px;
+    cursor: pointer;
+  }
+  .hero-phone:focus { outline: none; }
+  .hero-phone:focus-visible .hero-phone-frame {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 6px;
+  }
+  /* In landscape on short viewports (e.g. a phone held sideways) the
+     svh-based cap above collapses the phone to a sliver. The stacked
+     layout has horizontal room there, so drop the height cap. */
+  @media (max-width: 1023px) and (orientation: landscape) {
+    .hero-phone { max-width: 100%; }
+  }
+  @media (min-width: 1024px) {
+    .hero-phone { width: 300px; }
+  }
+  /* Once the site-container hits its 1280px ceiling it stops widening, so
+     the column the phone sits in is at its roomiest. Scale the phone up to
+     fill that extra space (the svh-based max-width above still caps it on
+     short viewports). */
+  @media (min-width: 1280px) {
+    .hero-phone { width: 360px; }
+  }
+
+  /* Tilt wrapper — JS writes --rx / --ry (deg) as the cursor moves.
+     Defaults to flat so it looks right before/without JS. */
+  .hero-phone-tilt {
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hero-phone.is-tilting .hero-phone-tilt {
+    /* Snappier follow while the cursor is actively over the device. */
+    transition: transform 0.12s ease-out;
+  }
+
+  .hero-phone-frame {
+    position: relative;
+    aspect-ratio: 9 / 19.5;
+    border-radius: var(--frame-radius);
+    padding: 7px;
+    /* Lift the glass above the side rail so the edge sits visibly behind it. */
+    transform-style: preserve-3d;
+    z-index: 1;
+    /* The aluminium/titanium rail: a diagonal sheen across a dark frame,
+       lit from the top-left so it reads as a physical edge, not a stroke. */
+    background:
+      linear-gradient(145deg, #3a3a3d 0%, #0c0c0d 22%, #060607 50%, #0c0c0d 78%, #2c2c2f 100%);
+    box-shadow:
+      /* crisp outer edge */
+      0 0 0 1px rgb(0 0 0 / 0.55),
+      /* top rim catching light */
+      inset 0 1px 1px rgb(255 255 255 / 0.22),
+      /* bottom rim falling into shadow */
+      inset 0 -1px 1px rgb(0 0 0 / 0.6),
+      /* layered grounding shadow: tight contact + soft ambient */
+      0 2px 4px rgb(31 27 20 / 0.10),
+      0 14px 30px rgb(31 27 20 / 0.18),
+      0 34px 70px rgb(31 27 20 / 0.12);
+  }
+  /* The extruded side rail: a copy of the frame pushed back in Z. Because
+     the parent preserves 3D, when the device tilts this slab is revealed
+     along whichever edge turns away from the viewer, reading as the phone's
+     physical thickness rather than a painted-on stroke. */
+  .hero-phone-edge {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--frame-radius);
+    transform: translateZ(-14px);
+    background: linear-gradient(145deg, #2a2a2c 0%, #050506 40%, #050506 60%, #1c1c1f 100%);
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.5);
+  }
+
+  /* Dynamic grounding shadow. JS skews/offsets it (via --sh-x / --sh-skew)
+     opposite the tilt, so the phone reads as hovering above the surface and
+     casting a shadow that swings as it turns — the cue that sells "object,
+     not sticker". Sits behind everything at the base of the 3D stack. */
+  .hero-phone-shadow {
+    position: absolute;
+    inset: 6% 8%;
+    border-radius: var(--frame-radius);
+    background: radial-gradient(ellipse at center, var(--phone-shadow) 0%, transparent 72%);
+    filter: blur(28px);
+    transform: translateZ(-60px) translateX(var(--sh-x, 0px)) translateY(18px) skewX(var(--sh-skew, 0deg)) scale(0.92);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+  }
+  .hero-phone.is-tilting .hero-phone-shadow {
+    transition: transform 0.12s ease-out;
+  }
+
+  /* Inner bezel: the thin black border between rail and glass. Using a
+     border (not padding) means overflow:hidden clips the screen at the
+     content edge, whose radius (--screen-radius − 3px border) is concentric
+     with the bezel — so the corners nest cleanly with no gap. The radius
+     scales with the phone's width so the clip always lands just inside the
+     screenshot's own rounded corner, hiding its black corner pixels. */
+  .hero-phone-screen-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Sit the glass just forward of the rail so the bezel has real depth. */
+    transform: translateZ(1px);
+    border-radius: var(--screen-radius);
+    background: #050505;
+    border: 3px solid #050505;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.04),
+      inset 0 1px 2px rgb(0 0 0 / 0.8);
+    overflow: hidden;
+  }
+  .hero-phone-screen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    background: #050505;
+  }
+  /* The incoming theme is painted on this top layer and crossfaded in.
+     Once the fade completes, JS copies it down to the base layer and resets
+     this one to transparent, ready for the next swap. */
+  .hero-phone-screen-next {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    will-change: opacity;
+  }
+  .hero-phone-screen-next.is-fading {
+    opacity: 1;
+    transition: opacity 0.35s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-phone-screen-next.is-fading { transition: none; }
+  }
+  .cta-primary {
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: 0 1px 3px rgb(247 147 26 / 0.30), 0 4px 16px rgb(247 147 26 / 0.22);
+    transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  }
+  .cta-primary:hover {
+    opacity: 0.92;
+    box-shadow: 0 2px 6px rgb(247 147 26 / 0.35), 0 8px 24px rgb(247 147 26 / 0.28);
+    transform: translateY(-1px);
+  }
+  .cta-primary:active { transform: translateY(0); }
+
+  .cta-secondary {
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+  .cta-secondary:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+  }
+  .cta-secondary:active { transform: translateY(0); }
+</style>
+
+<script is:inline define:vars={{ screenSrcs, themeLabels, altPrefix, altSuffix }}>
+  // Subtle 3D tilt: the hero phone leans toward the cursor as it moves
+  // across the hero, easing back to flat when the pointer leaves.
+  const phone = document.getElementById('hero-phone');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Click/tap (or Enter/Space) cycles the screen through the four themes,
+  // matching the deck in the Themes section. Sources are fixed; the labels and
+  // alt-text affixes are translated and injected via define:vars above.
+  const screen = document.getElementById('hero-phone-screen');
+  const screenNext = document.getElementById('hero-phone-screen-next');
+  if (phone && screen && screenNext) {
+    const themes = screenSrcs.map((src, i) => ({ src, label: themeLabels[i] }));
+    // Preload so the crossfade is instant after the first cycle.
+    themes.forEach((t) => { const img = new Image(); img.src = t.src; });
+
+    // In dark mode, open on the Deepsea Blue theme to match the page chrome.
+    // The src list is [paper-cream, deepsea-blue, salmon-press, oled-black],
+    // so Deepsea Blue is index 1. The theme `dark` class is set on <html>
+    // before first paint (see Layout.astro), so this runs early enough to
+    // avoid a flash of the light default.
+    // The light/dark default screens. The src list is
+    // [paper-cream, deepsea-blue, salmon-press, oled-black], so the hero opens
+    // on Paper Cream in light mode and Deepsea Blue in dark mode.
+    const deepseaIndex = screenSrcs.findIndex((src) => src.includes('deepsea-blue'));
+    const isDark = () => document.documentElement.classList.contains('dark');
+    const defaultIndex = () => (isDark() && deepseaIndex !== -1 ? deepseaIndex : 0);
+
+    // The `dark` class is set on <html> before first paint (see Layout.astro),
+    // so this resolves the correct starting theme without a flash.
+    let current = defaultIndex();
+    let fading = false;
+    // Once the user taps to cycle, the phone is "theirs" — a later dark-mode
+    // toggle should recolor the page but not yank away the screenshot they
+    // deliberately chose. Until then, toggling theme swaps the default screen.
+    let userPicked = false;
+
+    // Apply the resolved starting theme to the visible screen immediately.
+    if (current !== 0) {
+      const start = themes[current];
+      screen.src = start.src;
+      screen.alt = `${altPrefix}${start.label}${altSuffix}`;
+    }
+
+    // Crossfade to a given theme index: paint the incoming theme on the top
+    // layer and fade it in. When the fade ends, commit it to the base layer and
+    // reset the top one to transparent — so the next swap starts clean. A call
+    // while a fade is in flight is ignored to avoid half-finished blends.
+    const goTo = (next) => {
+      if (fading || next === current) return;
+      current = next;
+      const t = themes[current];
+
+      const commit = () => {
+        screen.src = t.src;
+        screen.alt = `${altPrefix}${t.label}${altSuffix}`;
+        screenNext.classList.remove('is-fading');
+        screenNext.style.opacity = '';
+        fading = false;
+      };
+
+      screenNext.src = t.src;
+      fading = true;
+
+      // If reduced-motion zeroes the transition, transitionend won't fire —
+      // commit on the next frame instead.
+      if (reduce.matches) {
+        screenNext.classList.add('is-fading');
+        requestAnimationFrame(commit);
+        return;
+      }
+
+      screenNext.addEventListener('transitionend', commit, { once: true });
+      // Next frame so the browser registers opacity:0 before transitioning.
+      requestAnimationFrame(() => screenNext.classList.add('is-fading'));
+    };
+
+    const cycle = () => {
+      userPicked = true;
+      goTo((current + 1) % themes.length);
+    };
+
+    phone.addEventListener('click', cycle);
+    phone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        cycle();
+      }
+    });
+
+    // Toggling dark mode at runtime swaps the hero to that mode's default
+    // screen — unless the user has already cycled the phone themselves.
+    document.addEventListener('themechange', () => {
+      if (!userPicked) goTo(defaultIndex());
+    });
+  }
+
+  // Only on devices with a real pointer; skip touch + reduced-motion.
+  if (phone && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce.matches) {
+    const hero = phone.closest('.hero-section');
+    const zone = hero ?? phone;
+
+    const MAX = 2.2; // degrees of tilt at the edges
+    let targetX = 0, targetY = 0;
+    let curX = 0, curY = 0;
+    let raf = 0;
+
+    const render = () => {
+      // Ease current values toward targets for a smooth, weighty follow.
+      curX += (targetX - curX) * 0.12;
+      curY += (targetY - curY) * 0.12;
+      phone.style.setProperty('--rx', curX.toFixed(2) + 'deg');
+      phone.style.setProperty('--ry', curY.toFixed(2) + 'deg');
+      // Swing the grounding shadow opposite the horizontal lean so it reads
+      // as cast by a light overhead — the phone turns, its shadow trails.
+      phone.style.setProperty('--sh-x', (-curY * 1.6).toFixed(2) + 'px');
+      phone.style.setProperty('--sh-skew', (-curY * 0.8).toFixed(2) + 'deg');
+
+      const settled =
+        Math.abs(targetX - curX) < 0.01 &&
+        Math.abs(targetY - curY) < 0.01;
+      raf = settled ? 0 : requestAnimationFrame(render);
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(render); };
+
+    zone.addEventListener('pointermove', (e) => {
+      const r = zone.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;   // 0..1
+      const py = (e.clientY - r.top) / r.height;   // 0..1
+      // Cursor right -> rotateY positive (leans right); cursor up -> rotateX positive.
+      targetY = (px - 0.5) * 2 * MAX;
+      targetX = -(py - 0.5) * 2 * MAX;
+      phone.classList.add('is-tilting');
+      kick();
+    });
+
+    zone.addEventListener('pointerleave', () => {
+      targetX = 0; targetY = 0;
+      phone.classList.remove('is-tilting');
+      kick();
+    });
+  }
+</script>
