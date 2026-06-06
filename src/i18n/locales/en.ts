@@ -78,7 +78,7 @@ export const en = {
     altSuffix: ' screen',
     // The four theme names, shared between this section's markup and the hero's
     // client-side theme-cycling script. Order matches the screenshot order.
-    labels: ['Paper Cream', 'Deepsea Blue', 'Salmon Press', 'OLED Black'],
+    labels: ['Paper Cream', 'Salmon Press', 'Deepsea Blue', 'OLED Black'],
   },
 
   privacy: {

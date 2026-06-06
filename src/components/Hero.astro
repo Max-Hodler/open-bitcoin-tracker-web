@@ -15,8 +15,8 @@ const reasons = t.hero.reasons.map((r, i) => ({ ...r, icon: icons[i] }));
 // are translated, so they're handed to the client via define:vars.
 const screenSrcs = [
   '/screenshots/paper-cream.png',
-  '/screenshots/deepsea-blue.png',
   '/screenshots/salmon-press.png',
+  '/screenshots/deepsea-blue.png',
   '/screenshots/oled-black.png',
 ];
 const themeLabels = t.themes.labels;
@@ -330,12 +330,12 @@ const firstAlt = `${altPrefix}${themeLabels[0]}${altSuffix}`;
     themes.forEach((t) => { const img = new Image(); img.src = t.src; });
 
     // In dark mode, open on the Deepsea Blue theme to match the page chrome.
-    // The src list is [paper-cream, deepsea-blue, salmon-press, oled-black],
-    // so Deepsea Blue is index 1. The theme `dark` class is set on <html>
+    // The src list is [paper-cream, salmon-press, deepsea-blue, oled-black],
+    // so Deepsea Blue is index 2. The theme `dark` class is set on <html>
     // before first paint (see Layout.astro), so this runs early enough to
     // avoid a flash of the light default.
     // The light/dark default screens. The src list is
-    // [paper-cream, deepsea-blue, salmon-press, oled-black], so the hero opens
+    // [paper-cream, salmon-press, deepsea-blue, oled-black], so the hero opens
     // on Paper Cream in light mode and Deepsea Blue in dark mode.
     const deepseaIndex = screenSrcs.findIndex((src) => src.includes('deepsea-blue'));
     const isDark = () => document.documentElement.classList.contains('dark');

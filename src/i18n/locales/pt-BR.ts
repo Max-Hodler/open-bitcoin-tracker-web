@@ -60,7 +60,7 @@ export const ptBR: Dict = {
     showAria: 'Mostrar a captura de tela de {label}',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',
-    labels: ['Paper Cream', 'Deepsea Blue', 'Salmon Press', 'OLED Black'],
+    labels: ['Paper Cream', 'Salmon Press', 'Deepsea Blue', 'OLED Black'],
   },
 
   privacy: {

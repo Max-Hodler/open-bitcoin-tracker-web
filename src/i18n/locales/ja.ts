@@ -60,7 +60,7 @@ export const ja: Dict = {
     showAria: '{label} のスクリーンショットを表示',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: ' の画面',
-    labels: ['Paper Cream', 'Deepsea Blue', 'Salmon Press', 'OLED Black'],
+    labels: ['Paper Cream', 'Salmon Press', 'Deepsea Blue', 'OLED Black'],
   },
 
   privacy: {

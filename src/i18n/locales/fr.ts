@@ -60,7 +60,7 @@ export const fr: Dict = {
     showAria: 'Afficher la capture d’écran {label}',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',
-    labels: ['Paper Cream', 'Deepsea Blue', 'Salmon Press', 'OLED Black'],
+    labels: ['Paper Cream', 'Salmon Press', 'Deepsea Blue', 'OLED Black'],
   },
 
   privacy: {

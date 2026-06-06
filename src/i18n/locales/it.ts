@@ -60,7 +60,7 @@ export const it: Dict = {
     showAria: 'Mostra lo screenshot di {label}',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',
-    labels: ['Paper Cream', 'Deepsea Blue', 'Salmon Press', 'OLED Black'],
+    labels: ['Paper Cream', 'Salmon Press', 'Deepsea Blue', 'OLED Black'],
   },
 
   privacy: {
