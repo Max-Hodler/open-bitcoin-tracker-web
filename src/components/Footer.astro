@@ -50,19 +50,19 @@ const privacyHref = getRelativeLocaleUrl(lang, 'privacy');
     <div class="flex flex-col items-start gap-10 sm:flex-row sm:items-start sm:gap-16 text-sm text-ink-muted" data-reveal-stagger="100">
 
       <div data-reveal>
-        <ul class="space-y-2.5">
-          <li><a href={repoUrl} rel="noopener" class="footer-link hover:text-ink">{t.footer.github}</a></li>
-          <li><a href={aboutHref} class="footer-link hover:text-ink">{t.footer.about}</a></li>
-          <li><a href={privacyHref} class="footer-link hover:text-ink">{t.footer.privacy}</a></li>
-        </ul>
+        <div class="flex flex-col items-start gap-2.5">
+          <a href={repoUrl} rel="noopener" class="footer-link hover:text-ink">{t.footer.github}</a>
+          <a href={aboutHref} class="footer-link hover:text-ink">{t.footer.about}</a>
+          <a href={privacyHref} class="footer-link hover:text-ink">{t.footer.privacy}</a>
+        </div>
       </div>
 
       <div class="max-w-[260px]" data-reveal>
         <div class="flex flex-col items-start gap-2.5 text-ink-muted">
           <LanguageSwitcher placement="up" />
           <ThemeToggle showLabel />
+          <p class="leading-relaxed">{t.footer.copyright}</p>
         </div>
-        <p class="mt-4 leading-relaxed text-ink-muted">{t.footer.copyright}</p>
       </div>
     </div>
     </div>
