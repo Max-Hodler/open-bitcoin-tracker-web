@@ -40,7 +40,7 @@ const dataSources = dataSourceMeta.map((d, i) => ({ ...d, label: t.about.dataSou
           <div class="about-profile-links">
             <a
               href="https://primal.net/p/nprofile1qqstl0zduk7yrhpcg08mltjhpdmjfghr2lmkeu6qdtve27vrn72fwvqxhwm2z"
-              rel="noopener"
+              rel="noopener noreferrer" target="_blank"
               target="_blank"
               class="about-profile-link"
               aria-label={t.about.primalAria}
@@ -49,7 +49,7 @@ const dataSources = dataSourceMeta.map((d, i) => ({ ...d, label: t.about.dataSou
             </a>
             <a
               href="https://x.com/MaxHodler"
-              rel="noopener"
+              rel="noopener noreferrer" target="_blank"
               target="_blank"
               class="about-profile-link"
               aria-label={t.about.followAria}
@@ -72,7 +72,7 @@ const dataSources = dataSourceMeta.map((d, i) => ({ ...d, label: t.about.dataSou
         </p>
         <div class="about-group">
           {dataSources.map((item) => (
-            <a href={item.url} rel="noopener" class="about-tile">
+            <a href={item.url} rel="noopener noreferrer" target="_blank" class="about-tile">
               <span class="about-tile-label">{item.label}</span>
               <span class="about-tile-trailing">
                 <span class="about-tile-value">{item.value}</span>
@@ -87,7 +87,7 @@ const dataSources = dataSourceMeta.map((d, i) => ({ ...d, label: t.about.dataSou
         </div>
 
         <div class="about-group">
-          <a href={`${repoUrl}/blob/main/LICENSE`} rel="noopener" class="about-tile">
+          <a href={`${repoUrl}/blob/main/LICENSE`} rel="noopener noreferrer" target="_blank" class="about-tile">
             <span class="about-tile-label">{t.about.licenses}</span>
             <span class="about-tile-trailing">
               <svg class="about-tile-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

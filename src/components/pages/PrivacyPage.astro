@@ -43,12 +43,12 @@ const p = t.policy;
             {('parasAfter' in section ? section.parasAfter : []).map((para) => <p>{para}</p>)}
             {'repoLabel' in section && section.repoLabel && (
               <p>
-                {section.repoLabel} <a href={repoUrl} rel="noopener">github.com/Max-Hodler/open-bitcoin-tracker</a>
+                {section.repoLabel} <a href={repoUrl} rel="noopener noreferrer" target="_blank">github.com/Max-Hodler/open-bitcoin-tracker</a>
               </p>
             )}
             {'contactBefore' in section && section.contactBefore && (
               <p>
-                {section.contactBefore} <a href={`${repoUrl}/issues`} rel="noopener">github.com/Max-Hodler/open-bitcoin-tracker/issues</a>{section.contactAfter}
+                {section.contactBefore} <a href={`${repoUrl}/issues`} rel="noopener noreferrer" target="_blank">github.com/Max-Hodler/open-bitcoin-tracker/issues</a>{section.contactAfter}
               </p>
             )}
           </>
