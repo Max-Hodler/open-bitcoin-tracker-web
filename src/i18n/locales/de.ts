@@ -34,6 +34,7 @@ export const de: Dict = {
     tagline: 'Open-Source-Bitcoin-Portfolio-Tracker für Android.',
     downloadApk: 'APK herunterladen',
     viewGithub: 'Auf GitHub ansehen',
+    viewZapstore: 'Zapstore',
     phoneAria: 'Screenshot von Open Bitcoin Tracker – zum Wechseln des Themes klicken',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',

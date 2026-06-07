@@ -34,6 +34,7 @@ export const es: Dict = {
     tagline: 'Trackeador de portfolio de bitcoin de código abierto para Android.',
     downloadApk: 'Descargar APK',
     viewGithub: 'Ver en GitHub',
+    viewZapstore: 'Zapstore',
     phoneAria: 'Captura de Open Bitcoin Tracker — haz clic para cambiar de tema',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',

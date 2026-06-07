@@ -46,6 +46,7 @@ export const en = {
     tagline: 'Open source bitcoin portfolio tracker for Android.',
     downloadApk: 'Download APK',
     viewGithub: 'View on GitHub',
+    viewZapstore: 'Zapstore',
     phoneAria: 'Open Bitcoin Tracker screenshot — click to change theme',
     // Screenshot alt text is built client-side as `${altPrefix}${label}${altSuffix}`,
     // e.g. "Open Bitcoin Tracker — Home screen". The product name stays in the

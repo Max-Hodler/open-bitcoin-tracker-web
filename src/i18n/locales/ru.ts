@@ -34,6 +34,7 @@ export const ru: Dict = {
     tagline: 'Открытый трекер биткоин-портфеля для Android.',
     downloadApk: 'Скачать APK',
     viewGithub: 'Открыть на GitHub',
+    viewZapstore: 'Zapstore',
     phoneAria: 'Скриншот Open Bitcoin Tracker — нажмите, чтобы сменить тему',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',

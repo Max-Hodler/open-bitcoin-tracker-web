@@ -34,6 +34,7 @@ export const ja: Dict = {
     tagline: 'Android向けオープンソースのビットコイン・ポートフォリオ追跡アプリ。',
     downloadApk: 'APK をダウンロード',
     viewGithub: 'GitHub で見る',
+    viewZapstore: 'Zapstore',
     phoneAria: 'Open Bitcoin Tracker のスクリーンショット — クリックでテーマを変更',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: ' の画面',

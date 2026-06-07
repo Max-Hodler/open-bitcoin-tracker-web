@@ -5,17 +5,17 @@ export const tr: Dict = {
     home: {
       title: 'Open Bitcoin Tracker - Android için açık kaynaklı bitcoin portföy takipçisi',
       description:
-        'Bitcoin stack’lerinizin değerini takip etmek için gizliliğe önem veren, açık kaynaklı bir Android uygulaması. Hesap yok, analiz yok, telemetri yok.',
+        "Bitcoin stack'lerinizin değerini takip etmek için gizliliğe önem veren, açık kaynaklı bir Android uygulaması. Hesap yok, analiz yok, telemetri yok.",
     },
     about: {
       title: 'Hakkında — Open Bitcoin Tracker',
       description:
-        'Open Bitcoin Tracker hakkında: Bitcoin stack’lerinizin değerini takip etmek için gizliliğe önem veren, açık kaynaklı bir Android uygulaması. Bağlantılar, veri kaynakları ve açık kaynak lisansları.',
+        "Open Bitcoin Tracker hakkında: Bitcoin stack'lerinizin değerini takip etmek için gizliliğe önem veren, açık kaynaklı bir Android uygulaması. Bağlantılar, veri kaynakları ve açık kaynak lisansları.",
     },
     privacy: {
       title: 'Gizlilik Politikası — Open Bitcoin Tracker',
       description:
-        'Open Bitcoin Tracker için gizlilik politikası: Bitcoin stack’lerinizin değerini takip etmek için gizliliğe önem veren, açık kaynaklı bir Android uygulaması.',
+        "Open Bitcoin Tracker için gizlilik politikası: Bitcoin stack'lerinizin değerini takip etmek için gizliliğe önem veren, açık kaynaklı bir Android uygulaması.",
     },
     ogImageAlt: 'Open Bitcoin Tracker — Android için gizli Bitcoin değer takipçisi',
   },
@@ -33,22 +33,23 @@ export const tr: Dict = {
   hero: {
     tagline: 'Android için açık kaynaklı bitcoin portföy takipçisi.',
     downloadApk: 'APK indir',
-    viewGithub: 'GitHub’da görüntüle',
+    viewGithub: "GitHub'da görüntüle",
+    viewZapstore: 'Zapstore',
     phoneAria: 'Open Bitcoin Tracker ekran görüntüsü — temayı değiştirmek için tıklayın',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',
     reasons: [
       {
         title: 'Acele etmeden biriktirenler için',
-        body: 'Gönderip almaya gerek duymayan, yalnızca stack’lerinin değerini takip etmek isteyenler için yapıldı.',
+        body: "Gönderip almaya gerek duymayan, yalnızca stack'lerinin değerini takip etmek isteyenler için yapıldı.",
       },
       {
         title: 'Tam gizlilik',
-        body: 'Her stack’teki miktarı elle girersin ve asla telefonundan çıkmaz. OBT’nin ne seed’e ne de key’lere ihtiyacı var.',
+        body: "Her stack'teki miktarı elle girersin ve asla telefonundan çıkmaz. OBT'nin ne seed'e ne de key'lere ihtiyacı var.",
       },
       {
         title: 'Hızlı ve hafif',
-        body: 'OBT hiçbir node’a bağlanmaz: anında açılır ve pili neredeyse hiç yormaz.',
+        body: "OBT hiçbir node'a bağlanmaz: anında açılır ve pili neredeyse hiç yormaz.",
       },
     ],
   },
@@ -69,13 +70,13 @@ export const tr: Dict = {
     cards: [
       { title: 'Hesap yok', body: 'Kayıt yok. Uygulamayı kur ve takibe başla.' },
       { title: 'Takip yok', body: 'Sıfır analiz, reklam yok, parmak izi yok.' },
-      { title: 'Yalnızca cihazda', body: 'Stack’lerin telefonunda kalır. Hiçbir şey yüklenmez.' },
+      { title: 'Yalnızca cihazda', body: "Stack'lerin telefonunda kalır. Hiçbir şey yüklenmez." },
       { title: 'Açık kaynak', body: 'MIT Lisansı. Güvenme, doğrula.' },
     ],
   },
 
   kao: {
-    body: 'Eylül 2026’dan itibaren Google, Play Store dışında kurulan uygulamalar için bile her Android geliştiricisinin kaydolmasını ve kimliğini doğrulamasını zorunlu kılacak. Bu, bunun gibi açık kaynaklı uygulamaları tehdit ediyor.',
+    body: "Eylül 2026'dan itibaren Google, Play Store dışında kurulan uygulamalar için bile her Android geliştiricisinin kaydolmasını ve kimliğini doğrulamasını zorunlu kılacak. Bu, bunun gibi açık kaynaklı uygulamaları tehdit ediyor.",
     linkText: 'Daha fazla bilgi: keepandroidopen.org',
   },
 
@@ -91,9 +92,9 @@ export const tr: Dict = {
 
   about: {
     h1: 'Hakkında',
-    storyHeader: 'OBT’yi neden yaptım',
+    storyHeader: "OBT'yi neden yaptım",
     story: [
-      'Open Bitcoin Tracker’ı, birden fazla stack’i rahatça takip etmek istediğim için yaptım. İşlem yapmaya ihtiyacım yok, sadece değerlerini izlemek istiyorum. Çoğu wallet ise yalnızca tek bir stack’e izin veriyor ya da bir node’a bağlanmak zorunda olduğu için yavaş kalıyor.',
+      "Open Bitcoin Tracker'ı, birden fazla stack'i rahatça takip etmek istediğim için yaptım. İşlem yapmaya ihtiyacım yok, sadece değerlerini izlemek istiyorum. Çoğu wallet ise yalnızca tek bir stack'e izin veriyor ya da bir node'a bağlanmak zorunda olduğu için yavaş kalıyor.",
       'Sonunda ailem ve arkadaşlarım da kullanmaya başladı, ben de başkalarının işine yarar diye herkese açtım.',
     ],
     dataSourcesHeader: 'Android uygulaması için veri kaynakları',
@@ -106,7 +107,7 @@ export const tr: Dict = {
     primalAria: "Primal'da Max Hodler",
     dataSourceLabels: ['Güncel fiyatlar', 'Geçmiş fiyatlar', 'Geçmiş döviz kurları', 'Mempool ve hashrate'],
     currenciesHeader: 'Desteklenen para birimleri',
-    currencyNote: 'Stack’lerini bu fiat para birimlerinin herhangi biriyle gör.',
+    currencyNote: "Stack'lerini bu fiat para birimlerinin herhangi biriyle gör.",
     currencyNames: ['ABD doları', 'Euro', 'İngiliz sterlini', 'Avustralya doları', 'Kanada doları', 'İsviçre frangı', 'Japon yeni'],
     languagesHeader: 'Desteklenen diller',
     languageNote: 'Uygulama ve bu site bu dillerde mevcut.',
@@ -132,10 +133,10 @@ export const tr: Dict = {
         list: [
           'Girdiğiniz stack adları ve Bitcoin bakiye miktarları.',
           'Uygulama tercihleri ve görüntüleme ayarları.',
-          'Android Keystore’da tutulan isteğe bağlı PIN veya biyometrik kilit açma yapılandırması.',
+          "Android Keystore'da tutulan isteğe bağlı PIN veya biyometrik kilit açma yapılandırması.",
         ],
         parasAfter: [
-          'Bu uygulama için Android’in Google Drive’a otomatik yedeklemesi devre dışıdır, bu nedenle yerel olarak saklanan veriler bu mekanizmayla Google’ın sunucularına kopyalanmaz.',
+          "Bu uygulama için Android'in Google Drive'a otomatik yedeklemesi devre dışıdır, bu nedenle yerel olarak saklanan veriler bu mekanizmayla Google'ın sunucularına kopyalanmaz.",
         ],
       },
       {
@@ -146,7 +147,7 @@ export const tr: Dict = {
         list: [
           'Kraken — gerçek zamanlı BTC fiyat verisi (WebSocket).',
           'mempool.space — blok yüksekliği, medyan ücretler ve blok tahminleri.',
-          'Coin Metrics — geçmiş ağ hashrate’i.',
+          "Coin Metrics — geçmiş ağ hashrate'i.",
           'Avrupa Merkez Bankası — günlük itibari para referans döviz kurları.',
         ],
         parasAfter: [
@@ -159,7 +160,7 @@ export const tr: Dict = {
         list: [
           'Kullanıcı hesapları, oturum açma kimlik bilgileri veya e-posta adresleri.',
           'Analiz veya ürün kullanım verileri (ör. Firebase Analytics, Sentry, Mixpanel).',
-          'Reklam tanımlayıcıları veya reklam SDK’ları.',
+          "Reklam tanımlayıcıları veya reklam SDK'ları.",
           'Cihaz dışı çökme raporları.',
         ],
       },
@@ -168,7 +169,7 @@ export const tr: Dict = {
         paras: ['Uygulama aşağıdaki Android izinlerini ister:'],
         list: [
           'İnternet — piyasa verilerini ve mempool bilgilerini almak için gereklidir.',
-          'Biyometrik kimlik doğrulama (isteğe bağlı) — etkinleştirildiğinde, uygulama yerel olarak kilidi açmak için Android’in BiometricPrompt API’sini kullanır. Biyometrik veriler Android işletim sistemi tarafından yönetilir; uygulama bunları asla almaz veya saklamaz.',
+          "Biyometrik kimlik doğrulama (isteğe bağlı) — etkinleştirildiğinde, uygulama yerel olarak kilidi açmak için Android'in BiometricPrompt API'sini kullanır. Biyometrik veriler Android işletim sistemi tarafından yönetilir; uygulama bunları asla almaz veya saklamaz.",
         ],
         parasAfter: [
           'Uygulama kişilere, konuma, kameraya, mikrofona veya genel dosya depolamasına erişim istemez.',

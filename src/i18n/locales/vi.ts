@@ -34,6 +34,7 @@ export const vi: Dict = {
     tagline: 'Trình theo dõi danh mục bitcoin mã nguồn mở cho Android.',
     downloadApk: 'Tải APK',
     viewGithub: 'Xem trên GitHub',
+    viewZapstore: 'Zapstore',
     phoneAria: 'Ảnh chụp màn hình Open Bitcoin Tracker — nhấn để đổi giao diện',
     altPrefix: 'Open Bitcoin Tracker — ',
     altSuffix: '',
